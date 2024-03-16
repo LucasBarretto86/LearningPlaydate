@@ -1,4 +1,5 @@
 import "CoreLibs/graphics"
+import "CoreLibs/sprites"
 
 local gfx = playdate.graphics
 
