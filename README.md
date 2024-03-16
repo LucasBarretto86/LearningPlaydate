@@ -1,6 +1,6 @@
-# Playdate Development
+# Learning Playdate
 
-- [Playdate Development](#playdate-development)
+- [Learning Playdate](#learning-playdate)
   - [Setup SDK](#setup-sdk)
     - [On Linux](#on-linux)
   - [Commands](#commands)
