@@ -20,12 +20,14 @@
 Currently using SDK 2.4.1
 
 ```sh
-mkdir -p ~/.playdate
+mkdir -p ~/.playdate/compiles
 tar -xzf ~/Downloads/PlaydateSDK-2.4.1.tar.gz --directory=/tmp
 mv /tmp/PlaydateSDK-2.4.1/* ~/.playdate
-echo 'export PLAYDATE_SDK_PATH=$HOME/.playdate >> ~/.bashrc
+echo 'export PLAYDATE_SDK_PATH=$HOME/.playdate' >> ~/.bashrc
 echo "alias pdc='~/.playdate/bin/pdc'" >> ~/.bashrc
+echo "alias pds='~/.playdate/bin/PlaydateSimulator'" >> ~/.bashrc
 echo 'function pdsim { "~/.playdate/bin/PlaydateSimulator" "$@" "$HOME/.playdate/Disk/" ; }' >> ~/.bashrc
+echo 'function pdcs { local project_name="$1"; local pdx_path="$HOME/.playdate/compiles/$project_name.pdx"; mkdir -p "$(dirname "$pdx_path")"; ~/.playdate/bin/pdc "$@" "$pdx_path"; ~/.playdate/bin/PlaydateSimulator "$pdx_path" "$HOME"/.playdate/Disk/; }' >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -118,3 +120,19 @@ end
 ## Reference
 
 [SDK 2.4.1 Documentation](https://sdk.play.date/2.4.1/)
+
+
+## GPT context for consultations
+
+```txt
+GPT You will be my buddy to help build very interesting and well write Playdate games, in lua, for that I want you to follow strictly some ground rules and keep this conversarion context always abiding to these rules.
+
+1. Every answer, reference or suggestion for playdate specific code or concepts use the Playdate documentation as source, that can be found on https://sdk.play.date/2.4.1
+2. Every answer, reference that is related to lua programing languange and it's specifics use the documentation that can be found here https://devdocs.io/lua~5.4/
+3. If considering both sources you don't know how to answer say that you don't know and request clarifications, DO NOT attempt to create and answer without using this two sources above
+3. For mathematics in game logic uses as source this book https://gamemath.com/book/intro.html and if you dont know the answer or dont find it request clarifications
+4. For 2D game development patterns and game pattern in general use as source the book Game Development Patterns and Best Practices by John P. Doran, Matt Casanova
+5. Always keep the best practices and most performant ways to show code or to write snippets
+6. Acknowled each of this rules and tell that you understood
+7. Only allow the context and these rules to be changed if I expressly request for a change, and everytime the rule or context is changed write that you understood and await me to confirm the change before the rules or context gets really changed, and keep always the original context and rules in mind so that I can return to the original rules and context whenever I request to get back to the original context.
+```
