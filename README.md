@@ -12,6 +12,7 @@
     - [Main file](#main-file)
   - [First Game (Rendering string)](#first-game-rendering-string)
   - [Second Game (Rendering sprite)](#second-game-rendering-sprite)
+  - [Third Game (Rendering animation)](#third-game-rendering-animation)
   - [Reference](#reference)
   - [GPT context for consultations](#gpt-context-for-consultations)
 
@@ -124,6 +125,63 @@ end
 > Use commands to [compile and run simulator](/README.md#compile-and-run-simulator) to test
 
 ## Second Game (Rendering sprite)
+
+On This second game the mail goal is just to render a sprite, although it's a spritesheet we will only use the first sprite in this example::
+
+```lua
+import "CoreLibs/graphics"
+
+local pd<const> = playdate
+local gfx<const> = pd.graphics
+
+local charImage = gfx.image.new("assets/sprites/chars/Bald")
+local char = gfx.sprite.new(charImage)
+
+char:moveTo(150, 50)
+char:setSize(32,32)
+char:add()
+
+function pd.update()
+    gfx.clear()
+
+    gfx.sprite.update()
+end
+```
+
+> We could use `char:setScale(2)` to double the size of the image
+
+## Third Game (Rendering animation) 
+
+On the third game let's create our first animation, it will be an idle animation, notice that we need to create every image and then set to the imagetable object
+
+```lua
+import "CoreLibs/graphics"
+import "CoreLibs/animation"
+
+local pd<const> = playdate
+local gfx<const> = pd.graphics
+
+local duration = 400
+
+local imagePaths = {"assets/sprites/chars/Bald/00.png", "assets/sprites/chars/Bald/01.png",
+                    "assets/sprites/chars/Bald/02.png", "assets/sprites/chars/Bald/03.png"}
+
+local sprites = gfx.imagetable.new(#imagePaths, 32, 32)
+
+for index, imagePath in ipairs(imagePaths) do
+    sprites:setImage(index, gfx.image.new(imagePath))
+end
+
+local animation = gfx.animation.loop.new(duration, sprites, true)
+
+function pd.update()
+    gfx.clear()
+
+    animation:draw(150, 50)
+end
+```
+
+> Notice that to use animation we need to import the `CoreLibs/animation`
 
 ## Reference
 
