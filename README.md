@@ -6,12 +6,14 @@
   - [Commands](#commands)
     - [Compiling](#compiling)
     - [Running game on Simulator](#running-game-on-simulator)
+    - [Compile and Run Simulator](#compile-and-run-simulator)
   - [Basic CoreLibs](#basic-corelibs)
   - [Project structure](#project-structure)
     - [Main file](#main-file)
   - [First Game (Rendering string)](#first-game-rendering-string)
   - [Second Game (Rendering sprite)](#second-game-rendering-sprite)
   - [Reference](#reference)
+  - [GPT context for consultations](#gpt-context-for-consultations)
 
 ## Setup SDK
 
@@ -47,6 +49,12 @@ pdc ./FirstGame/Source ./Compiled/FirstGame.pdx
 pdsim ./Compiled/FirstGame.pdx
 ```
 
+### Compile and Run Simulator
+
+```sh
+pdcs ./FirstGame/Source
+```
+
 ## Basic CoreLibs
 
 In most part of the games we will use some of these basic CoreLibs
@@ -67,6 +75,7 @@ To create a game can follow this basic structure
 ```mono
 GameName
 └── Source
+    └── assets/sprites/
     └── main.lua
 ```
 
@@ -112,15 +121,13 @@ function playdate.update()
 end
 ```
 
-> Use commands to [compile](/README.md#compiling) and [run simulator](/README.md#running-game-on-simulator) to test
+> Use commands to [compile and run simulator](/README.md#compile-and-run-simulator) to test
 
 ## Second Game (Rendering sprite)
-
 
 ## Reference
 
 [SDK 2.4.1 Documentation](https://sdk.play.date/2.4.1/)
-
 
 ## GPT context for consultations
 

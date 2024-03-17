@@ -1,19 +1,17 @@
 import "CoreLibs/graphics"
 
-local gfx = playdate.graphics
-local screenWidth = playdate.display.getWidth()
-local screenHeight = playdate.display.getHeight()
+local pd<const> = playdate
+local gfx<const> = pd.graphics
 
-local char = gfx.imagetable.new(4, 32, 32)
+local charImage = gfx.image.new("assets/sprites/chars/Bald")
+local char = gfx.sprite.new(charImage)
 
-local success = char:load('./assets/sprites/L.png')
+char:moveTo(150, 50)
+char:setSize(32,32)
+char:add()
 
-function playdate.update()
+function pd.update()
     gfx.clear()
 
-    if success then
-        char:drawImage(1, screenWidth / 2, screenHeight / 2.5, false)
-    else
-        print("Failed to load image")
-    end
+    gfx.sprite.update()
 end
