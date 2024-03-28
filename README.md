@@ -13,6 +13,7 @@
   - [First Game (Rendering string)](#first-game-rendering-string)
   - [Second Game (Rendering sprite)](#second-game-rendering-sprite)
   - [Third Game (Rendering animation)](#third-game-rendering-animation)
+  - [Handling images](#handling-images)
   - [Reference](#reference)
   - [GPT context for consultations](#gpt-context-for-consultations)
 
@@ -182,6 +183,26 @@ end
 ```
 
 > Notice that to use animation we need to import the `CoreLibs/animation`
+
+## Handling images
+
+I am using imagemagik to handle image conversion, that might be useful
+
+```sh
+# /SecondGame//Source/assets/sprites/test/
+
+convert -monochrome test.png test-out.png
+```
+
+**Before converting:**
+
+![Image before conversion](./SecondGame//Source/assets/sprites/test/test.png)
+
+
+**After converting:**
+
+![Image before conversion](./SecondGame//Source/assets/sprites/test/test-out.png)
+
 
 ## Reference
 
