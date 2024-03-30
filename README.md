@@ -13,6 +13,14 @@
   - [First Game (Rendering string)](#first-game-rendering-string)
   - [Second Game (Rendering sprite)](#second-game-rendering-sprite)
   - [Third Game (Rendering animation)](#third-game-rendering-animation)
+  - [Fourth Game (button functions)](#fourth-game-button-functions)
+  - [Sprites](#sprites)
+  - [Controls](#controls)
+    - [Basic controls functions](#basic-controls-functions)
+  - [Tilemap](#tilemap)
+  - [Map generation](#map-generation)
+  - [NPC and Enemies](#npc-and-enemies)
+  - [Menus and UI](#menus-and-ui)
   - [Handling images](#handling-images)
   - [Reference](#reference)
   - [GPT context for consultations](#gpt-context-for-consultations)
@@ -31,7 +39,7 @@ echo 'export PLAYDATE_SDK_PATH=$HOME/.playdate' >> ~/.bashrc
 echo "alias pdc='~/.playdate/bin/pdc'" >> ~/.bashrc
 echo "alias pds='~/.playdate/bin/PlaydateSimulator'" >> ~/.bashrc
 echo 'function pdsim { "~/.playdate/bin/PlaydateSimulator" "$@" "$HOME/.playdate/Disk/" ; }' >> ~/.bashrc
-echo 'function pdcs { local project_name="$1"; local pdx_path="$HOME/.playdate/compiles/$project_name.pdx"; mkdir -p "$(dirname "$pdx_path")"; ~/.playdate/bin/pdc "$@" "$pdx_path"; ~/.playdate/bin/PlaydateSimulator "$pdx_path" "$HOME"/.playdate/Disk/; }' >> ~/.bashrc
+echo 'function pdcs { project_name="$1"; pdx_path="$HOME/.playdate/compiles/$project_name.pdx"; mkdir -p "$(dirname "$pdx_path")"; ~/.playdate/bin/pdc "$@" "$pdx_path"; ~/.playdate/bin/PlaydateSimulator "$pdx_path" "$HOME"/.playdate/Disk/; }' >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -93,7 +101,7 @@ import "CoreLibs/sprites"
 -- Other CoreLibs here
 
 -- Variables
-local gfx = playdate.graphics
+gfx = playdate.graphics
 
 -- Definitions
 playdate.display.setRefreshRate(20) -- By tdefault RefreshRate is 30
@@ -116,7 +124,7 @@ To able to render something we need to create or `main.lua` file and start impor
 
 import "CoreLibs/graphics"
 
-local gfx = playdate.graphics
+gfx = playdate.graphics
 
 function playdate.update()
     gfx.drawText("First Game has *Started*", 10, 10)
@@ -132,11 +140,11 @@ On This second game the mail goal is just to render a sprite, although it's a sp
 ```lua
 import "CoreLibs/graphics"
 
-local pd<const> = playdate
-local gfx<const> = pd.graphics
+pd = playdate
+gfx = pd.graphics
 
-local charImage = gfx.image.new("assets/sprites/chars/Bald")
-local char = gfx.sprite.new(charImage)
+charImage = gfx.image.new("assets/sprites/chars/Bald")
+char = gfx.sprite.new(charImage)
 
 char:moveTo(150, 50)
 char:setSize(32,32)
@@ -151,7 +159,7 @@ end
 
 > We could use `char:setScale(2)` to double the size of the image
 
-## Third Game (Rendering animation) 
+## Third Game (Rendering animation)
 
 On the third game let's create our first animation, it will be an idle animation, notice that we need to create every image and then set to the imagetable object
 
@@ -159,21 +167,21 @@ On the third game let's create our first animation, it will be an idle animation
 import "CoreLibs/graphics"
 import "CoreLibs/animation"
 
-local pd<const> = playdate
-local gfx<const> = pd.graphics
+pd = playdate
+gfx = pd.graphics
 
-local duration = 400
+duration = 400
 
-local imagePaths = {"assets/sprites/chars/Bald/00.png", "assets/sprites/chars/Bald/01.png",
+imagePaths = {"assets/sprites/chars/Bald/00.png", "assets/sprites/chars/Bald/01.png",
                     "assets/sprites/chars/Bald/02.png", "assets/sprites/chars/Bald/03.png"}
 
-local sprites = gfx.imagetable.new(#imagePaths, 32, 32)
+sprites = gfx.imagetable.new(#imagePaths, 32, 32)
 
 for index, imagePath in ipairs(imagePaths) do
     sprites:setImage(index, gfx.image.new(imagePath))
 end
 
-local animation = gfx.animation.loop.new(duration, sprites, true)
+animation = gfx.animation.loop.new(duration, sprites, true)
 
 function pd.update()
     gfx.clear()
@@ -183,6 +191,102 @@ end
 ```
 
 > Notice that to use animation we need to import the `CoreLibs/animation`
+
+## Fourth Game (button functions)
+
+On the fourth example we are going to load a simple sprite and add movement as we press down the hat keys from playdate
+
+```lua
+import "CoreLibs/graphics"
+
+pd = playdate
+gfx = pd.graphics
+
+charImage = gfx.image.new("assets/sprites/chars/Bald/00")
+char = gfx.sprite.new(charImage)
+
+charSpeed = 16
+charX = 150
+charY = 100
+
+char:moveTo(100, 100)
+char:setSize(64,64)
+char:add()
+
+-- Control events
+function playdate.leftButtonDown()
+    charX -= charSpeed
+end
+
+function playdate.rightButtonDown()
+    charX += charSpeed
+end
+
+function playdate.upButtonDown()
+    charY -= charSpeed
+end
+
+function playdate.downButtonDown()
+    charY += charSpeed
+end
+
+function pd.update()
+    char:moveTo(charX, charY)
+
+    gfx.sprite.update()
+end
+
+```
+
+## Sprites
+
+## Controls
+
+### Basic controls functions
+
+```lua
+-- Control events
+-- As Button are down
+playdate.leftButtonDown()
+
+playdate.rightButtonDown()
+
+playdate.upButtonDown()
+
+playdate.downButtonDown()
+
+playdate.AButtonDown()
+
+playdate.BButtonDown()
+
+-- As Button are up
+playdate.leftButtonUp()
+
+playdate.rightButtonUp()
+
+playdate.upButtonUp()
+
+playdate.downButtonUp()
+
+playdate.AButtonUp()
+
+playdate.BButtonUp()
+
+-- Other Button callbacks
+
+playdate.AButtonHeld()
+
+playdate.BButtonHeld()
+```
+
+## Tilemap
+
+## Map generation
+
+## NPC and Enemies
+
+## Menus and UI
+
 
 ## Handling images
 
@@ -198,11 +302,9 @@ convert -monochrome test.png test-out.png
 
 ![Image before conversion](./SecondGame//Source/assets/sprites/test/test.png)
 
-
 **After converting:**
 
 ![Image before conversion](./SecondGame//Source/assets/sprites/test/test-out.png)
-
 
 ## Reference
 
